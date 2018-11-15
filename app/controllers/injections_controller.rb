@@ -1,6 +1,9 @@
 require 'json'
 
 class InjectionsController < ApplicationController
+
+  before_action :authenticate_user!
+
   def create
     @injection = Injection.new(injection_params)
     @injection.save
