@@ -5,24 +5,19 @@ class InjectionsController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    @injection = Injection.new(injection_params)
-    @injection.save
+    current_user.injections.create(injection_params)
   end
 
   def index
-    return nil if !params[:user_id]
-    @injections = Injection.where("user_id = '#{params[:user_id]}'")
-    render json: @injections
+    render json: current_user.injections
   end
 
 def destroy
-  return nil if !params[:user_id]
-  @injections = Injection.where("user_id = '#{params[:user_id]}'")
-  @injections.destroy_all
+  current_user.injections.destroy_all
 end
 
   private
   def injection_params
-    params.require(:injection).permit(:user_id, :site, :time, :medtype)
+    params.require(:injection).permit(:site, :time, :medtype)
   end
 end
