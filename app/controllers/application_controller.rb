@@ -18,7 +18,7 @@ class ApplicationController < ActionController::API
 
   def authenticate_user
     if request.headers['Authorization'].present?
-      token = JSON.parse(request.headers['Authorization'])
+      token = request.headers['Authorization']
       # authenticate_or_request_with_http_token do |token|
       begin
         jwt_payload = JWT.decode(
